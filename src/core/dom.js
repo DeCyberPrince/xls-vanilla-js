@@ -31,6 +31,14 @@ class DOM {
   off(eventType, fn) {
     this.$el.removeEventListener(eventType, fn)
   }
+
+  closest(selector) {
+    return $(this.$el.closest(selector))
+  }
+
+  get coords() {
+    return this.$el.getBoundingClientRect()
+  }
 }
 
 export function $(element){
@@ -42,3 +50,5 @@ $.create = (classesStr = '', tagName = 'div') => {
   if (classesStr) $element.classList.add(classesStr)
   return $($element)
 }
+
+

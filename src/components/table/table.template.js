@@ -7,13 +7,23 @@ const createCell = () => {
   return `<div class="cell" contenteditable></div>`
 }
 
-const createCol = (content) => {
-  return `<div class="column">${content}</div>`
+const createCol = content => {
+  return `
+    <div class="column" data-type="resizable">
+      ${content}
+      <div class="column__resizer" data-resize="column"></div>
+    </div>
+    `
 }
 
 const createRow = (content, number) => `
   <div class="row">
-    <div class="row-info">${number || ''}</div>
+    <div class="row-info">
+      ${number || ''}
+      ${number 
+      ? '<div class="row__resizer" data-resize="row"></div>'
+      : ''}
+    </div>
     <div class="row-data">${content}</div>
   </div>
   `

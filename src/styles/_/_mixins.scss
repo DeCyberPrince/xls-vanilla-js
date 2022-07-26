@@ -27,3 +27,14 @@
   margin: 0;
   padding: 0;
 }
+
+@mixin resizer($color: dodgerblue, $cursor: move) {
+  position: absolute;
+  opacity: 0;
+  cursor: e-resize;
+  background-color: $color;
+  &:hover {
+    opacity: 1;
+    cursor: $cursor;
+  }
+}
