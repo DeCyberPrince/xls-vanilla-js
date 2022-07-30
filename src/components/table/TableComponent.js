@@ -25,13 +25,14 @@ export class TableComponent extends ExcelComponent {
     document.onmousemove = docE => {
       if (type === 'column') {
         const dx = docE.pageX - start.right
-        $parent.$el.style.width = `${start.width + dx}px`
+        const newWidth = {width:`${start.width + dx}px`}
+        $parent.css(newWidth)
         cells.forEach(cell => {
-          cell.style.width = `${start.width + dx}px`
+          $(cell).css(newWidth)
         })
       } else {
         const dy = docE.pageY - start.bottom
-        $parent.$el.style.height = `${start.height + dy}px`
+        $parent.css({height: `${start.height + dy}px`})
       }
 
 

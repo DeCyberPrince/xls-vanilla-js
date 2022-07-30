@@ -47,6 +47,12 @@ class DOM {
   queryAll(selector) {
     return this.$el.querySelectorAll(selector)
   }
+
+  css(styles = {}) {
+    Object.entries(styles)
+      .forEach(([prop, value]) => this.$el.style[prop] = value)
+    return this
+  }
 }
 
 export function $(element){
