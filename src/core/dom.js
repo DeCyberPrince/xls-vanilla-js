@@ -43,6 +43,10 @@ class DOM {
   get coords() {
     return this.$el.getBoundingClientRect()
   }
+
+  queryAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
 }
 
 export function $(element){

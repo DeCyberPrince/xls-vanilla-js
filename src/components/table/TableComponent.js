@@ -16,13 +16,25 @@ export class TableComponent extends ExcelComponent {
   }
   onMousedown(e) {
     const $resizer = $(e.target)
-    if (!e.target?.dataset?.resize) return
-    const $column = $resizer.closest('[data-type=resizable]')
-    const start = $column.coords
+    if (!$resizer.data.resize) return
+    const $parent = $resizer.closest('[data-type=resizable]')
+    const start = $parent.coords
+    const cells = this.$root.queryAll(`[data-column="${$parent.data.column}"]`)
+    const type = $resizer.data.resize
 
     document.onmousemove = docE => {
-      const dx = docE.pageX - start.right
-      $column.$el.style.width = `${start.width + dx}px`
+      if (type === 'column') {
+        const dx = docE.pageX - start.right
+        $parent.$el.style.width = `${start.width + dx}px`
+        cells.forEach(cell => {
+          cell.style.width = `${start.width + dx}px`
+        })
+      } else {
+        const dy = docE.pageY - start.bottom
+        $parent.$el.style.height = `${start.height + dy}px`
+      }
+
+
     }
 
     document.onmouseup = () => {
