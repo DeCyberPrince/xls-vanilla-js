@@ -36,6 +36,10 @@ class DOM {
     return $(this.$el.closest(selector))
   }
 
+  get data() {
+    return this.$el.dataset
+  }
+
   get coords() {
     return this.$el.getBoundingClientRect()
   }

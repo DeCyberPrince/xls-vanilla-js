@@ -3,13 +3,13 @@ const CHAR_CODES = {
   get Z() {return 90}
 }
 
-const createCell = () => {
-  return `<div class="cell" contenteditable></div>`
+const createCell = (_, column) => {
+  return `<div class="cell" contenteditable data-column="${column}"></div>`
 }
 
-const createCol = content => {
+const createColumn = (content, index) => {
   return `
-    <div class="column" data-type="resizable">
+    <div class="column" data-type="resizable" data-column="${index}">
       ${content}
       <div class="column__resizer" data-resize="column"></div>
     </div>
@@ -34,7 +34,7 @@ export const createTable = (
   const headers = new Array(colsCount)
     .fill('')
     .map(toChar)
-    .map(createCol)
+    .map(createColumn)
     .join('')
   const cells = new Array(colsCount)
     .fill('')
