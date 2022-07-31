@@ -33,8 +33,27 @@
   opacity: 0;
   cursor: e-resize;
   background-color: $color;
-  &:hover {
+  z-index: 1;
+  &:hover, &[data-active] {
     opacity: 1;
     cursor: $cursor;
+  }
+  &[data-active][data-resize]::after {
+    position: absolute;
+    display: inline-block;
+    content: '';
+    background-color: $color;
+  }
+  &[data-resize=row]::after {
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100vw;
+  }
+  &[data-resize=column]::after {
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 1px;
   }
 }

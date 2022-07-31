@@ -17,7 +17,9 @@ const createColumn = (content, index) => {
 }
 
 const createRow = (content, number) => `
-  <div class="row" data-type="resizable">
+  <div class="row" 
+        data-type="resizable" 
+        ${number ? 'data-row="'+number+'"' : ''}>
     <div class="row-info">
       ${number || ''}
       ${number 
