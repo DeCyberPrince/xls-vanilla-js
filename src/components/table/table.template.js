@@ -3,17 +3,29 @@ const CHAR_CODES = {
   get Z() {return 90}
 }
 
-const createCell = () => {
-  return `<div class="cell" contenteditable></div>`
+const createCell = (_, column) => {
+  return `<div class="cell" contenteditable data-column="${column}"></div>`
 }
 
-const createCol = (content) => {
-  return `<div class="column">${content}</div>`
+const createColumn = (content, index) => {
+  return `
+    <div class="column" data-type="resizable" data-column="${index}">
+      ${content}
+      <div class="column__resizer" data-resize="column"></div>
+    </div>
+    `
 }
 
 const createRow = (content, number) => `
-  <div class="row">
-    <div class="row-info">${number || ''}</div>
+  <div class="row" 
+        data-type="resizable" 
+        ${number ? 'data-row="'+number+'"' : ''}>
+    <div class="row-info">
+      ${number || ''}
+      ${number 
+      ? '<div class="row__resizer" data-resize="row"></div>'
+      : ''}
+    </div>
     <div class="row-data">${content}</div>
   </div>
   `
@@ -24,7 +36,7 @@ export const createTable = (
   const headers = new Array(colsCount)
     .fill('')
     .map(toChar)
-    .map(createCol)
+    .map(createColumn)
     .join('')
   const cells = new Array(colsCount)
     .fill('')

@@ -31,6 +31,28 @@ class DOM {
   off(eventType, fn) {
     this.$el.removeEventListener(eventType, fn)
   }
+
+  closest(selector) {
+    return $(this.$el.closest(selector))
+  }
+
+  get data() {
+    return this.$el.dataset
+  }
+
+  get coords() {
+    return this.$el.getBoundingClientRect()
+  }
+
+  queryAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
+
+  css(styles = {}) {
+    Object.entries(styles)
+      .forEach(([prop, value]) => this.$el.style[prop] = value)
+    return this
+  }
 }
 
 export function $(element){
@@ -42,3 +64,5 @@ $.create = (classesStr = '', tagName = 'div') => {
   if (classesStr) $element.classList.add(classesStr)
   return $($element)
 }
+
+

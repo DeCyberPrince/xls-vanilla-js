@@ -13,6 +13,7 @@
     height: $row-height;
     
     &-info {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -22,6 +23,14 @@
       border-top: none;
       border-left: none;
       background-color: #f8f9fa;
+    }
+
+    &__resizer {
+      @include resizer($select-color, row-resize);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
     }
 
     &-data {
@@ -38,6 +47,15 @@
         border: 1px solid $border-color;
         border-top: none;
         border-left: none;
+        position: relative;
+
+        &__resizer {
+          @include resizer($select-color, col-resize);
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 4px;
+        }
       }
 
       .cell {
@@ -54,11 +72,10 @@
 
         &.selected {
           border: none;
-          outline: 2px solid #3c74ff;
+          outline: 2px solid $select-color;
           z-index: 2;
         }
       }
     }
   }
-  
 }
