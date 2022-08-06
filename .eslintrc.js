@@ -6,12 +6,13 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es6: true
+    es6: true,
   },
   settings: {
-    failOnError: env.prod
+    failOnError: env.prod,
   },
   rules: {
-    'comma-dangle': ['error', 'only-multiline']
+    'comma-dangle': ['error', 'only-multiline'],
+    'space-before-function-paren': ['warn', 'never'],
   }
 }
