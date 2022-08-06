@@ -2,16 +2,17 @@ import { ExcelComponent } from '@core/ExcelComponent'
 import { createTable } from '@src/components/table/table.template'
 import { TableResizer } from '@src/components/table/table.resize'
 import { TableSelection } from '@src/components/table/TableSelection'
+import { $ } from '@core/dom'
 
 export class TableComponent extends ExcelComponent {
   static className = 'excel__table'
 
-  #selection = null
+  #selection = new TableSelection()
 
   constructor($root) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'mousemove', 'mouseup']
+      listeners: ['mousedown', 'mousemove', 'mouseup', 'click']
     })
   }
 
@@ -30,9 +31,12 @@ export class TableComponent extends ExcelComponent {
 
   onMouseup() {}
 
+  onClick(e) {
+    this.#selection.select($(e.target))
+  }
+
   init() {
     super.init()
-    this.#selection = new TableSelection()
     const firstSelection = this.$root.query('[data-id="0:0"]')
     this.#selection.select(firstSelection)
   }

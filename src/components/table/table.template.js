@@ -6,7 +6,8 @@ const CHAR_CODES = {
 const createCell = (row, _, column) => {
   return `<div class="cell" 
                contenteditable 
-               data-column="${column}" 
+               data-column="${column}"
+               data-type="cell"
                data-id="${row}:${column}">
           </div>`
 }
