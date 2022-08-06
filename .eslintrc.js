@@ -1,13 +1,17 @@
 const env = require('./.env')
+
 module.exports = {
   parser: '@babel/eslint-parser',
-  extends: ['eslint:recommended'],
+  extends: ['eslint:recommended', 'standard'],
   env: {
     browser: true,
     node: true,
     es6: true
   },
+  settings: {
+    failOnError: env.prod
+  },
   rules: {
-    'no-unused-vars': env.prod ? 'warn' : 'off'
+    'comma-dangle': ['error', 'only-multiline']
   }
 }
