@@ -1,7 +1,7 @@
 const [
-  path, 
-  HtmlWebpackPlugin, 
-  MiniCssExtractPlugin, 
+  path,
+  HtmlWebpackPlugin,
+  MiniCssExtractPlugin,
   ESLintPlugin
 ] = [
   require('path'),
@@ -44,9 +44,9 @@ const config = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          MiniCssExtractPlugin.loader, 
-          'css-loader', 
-          'postcss-loader', 
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
           'sass-loader'
         ]
       },
@@ -68,18 +68,21 @@ if (env.dev) {
   config.devServer = {
     port: 8080,
     hot: true,
-    watchFiles: './'
+    watchFiles: './',
+    client: {
+      overlay: false
+    }
   }
 }
 
 module.exports = config
 
-function pathTo(...args) {
+function pathTo (...args) {
   return path.resolve(__dirname, ...args)
 }
 
-function filename(name, ext) {
-  return env.prod ?
-  `${name}.[fullhash].min.${ext}` :
-  `${name}.[contenthash].dev.${ext}`
+function filename (name, ext) {
+  return env.prod
+    ? `${name}.[fullhash].min.${ext}`
+    : `${name}.[contenthash].dev.${ext}`
 }
