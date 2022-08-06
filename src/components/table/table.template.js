@@ -1,6 +1,6 @@
 const CHAR_CODES = {
-  get A() {return 65},
-  get Z() {return 90}
+  get A () { return 65 },
+  get Z () { return 90 }
 }
 
 const createCell = (_, column) => {
@@ -19,10 +19,10 @@ const createColumn = (content, index) => {
 const createRow = (content, number) => `
   <div class="row" 
         data-type="resizable" 
-        ${number ? 'data-row="'+number+'"' : ''}>
+        ${number ? 'data-row="' + number + '"' : ''}>
     <div class="row-info">
       ${number || ''}
-      ${number 
+      ${number
       ? '<div class="row__resizer" data-resize="row"></div>'
       : ''}
     </div>
@@ -50,6 +50,6 @@ export const createTable = (
   return table.join('')
 }
 
-function toChar(_, index) {
+function toChar (_, index) {
   return String.fromCharCode(CHAR_CODES.A + index)
 }

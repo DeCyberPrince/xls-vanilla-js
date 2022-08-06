@@ -1,40 +1,39 @@
-import {$} from '@core/dom'
+import { $ } from '@core/dom'
 
 export class TableResizer {
-
   #styles = {}
 
-  constructor(resizerEl, $root) {
+  constructor (resizerEl, $root) {
     this.$resizer = $(resizerEl)
     this.$root = $root
   }
 
-  get styles() {
+  get styles () {
     return this.#styles
   }
 
-  set styles(val) {
+  set styles (val) {
     if (!val) this.#styles = {}
     Object.entries(val).forEach(([prop, value]) => {
       this.#styles[prop] = value
     })
   }
 
-  get type() {
+  get type () {
     return this.$resizer.data.resize
   }
 
-  get $resizable() {
+  get $resizable () {
     return this.$resizer.closest('[data-type=resizable]')
   }
 
-  get isResizer() {
+  get isResizer () {
     return !!this.type
   }
 
-  start() {
+  start () {
     this.$resizer.data.active = ''
-    const {coords} = this.$resizable
+    const { coords } = this.$resizable
     const [axis, sideProp, sizeProp] = this.type === 'row'
       ? ['Y', 'bottom', 'height']
       : ['X', 'right', 'width']
@@ -42,15 +41,15 @@ export class TableResizer {
       const delta = e[`client${axis}`] - coords[sideProp]
       const newValue = coords[sizeProp] + delta
       if (newValue > 0) {
-        this.$resizer.css({[sideProp]: `${-delta}px`})
-        this.styles = {[sizeProp]: `${newValue}px`}
+        this.$resizer.css({ [sideProp]: `${-delta}px` })
+        this.styles = { [sizeProp]: `${newValue}px` }
       }
     }
   }
 
-  end() {
+  end () {
     delete this.$resizer.data.active
-    this.$resizer.css({right: 0, bottom: 0})
+    this.$resizer.css({ right: 0, bottom: 0 })
     this.$root
       .queryAll(`[data-${this.type}="${this.$resizable.data[this.type]}"]`)
       .forEach(el => {
