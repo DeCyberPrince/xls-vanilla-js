@@ -1,10 +1,18 @@
 const CHAR_CODES = {
-  get A () { return 65 },
-  get Z () { return 90 }
+  get A() { return 65 },
+  get Z() { return 90 }
 }
 
-const createCell = (_, column) => {
-  return `<div class="cell" contenteditable data-column="${column}"></div>`
+const createCell = (row, _, column) => {
+  return `<div class="cell" 
+               contenteditable 
+               data-column="${column}" 
+               data-id="${row}:${column}">
+          </div>`
+}
+
+const rowWrap = (row, iterCallback) => {
+  return iterCallback.bind(null, row)
 }
 
 const createColumn = (content, index) => {
@@ -38,18 +46,18 @@ export const createTable = (
     .map(toChar)
     .map(createColumn)
     .join('')
-  const cells = new Array(colsCount)
-    .fill('')
-    .map(createCell)
-    .join('')
-
   const table = [createRow(headers)]
-  for (let i = 1; i <= rowsCount; i++) {
+
+  for (let i = 0; i < rowsCount; i++) {
+    const cells = new Array(colsCount)
+      .fill('')
+      .map(rowWrap(i, createCell))
+      .join('')
     table.push(createRow(cells, i))
   }
   return table.join('')
 }
 
-function toChar (_, index) {
+function toChar(_, index) {
   return String.fromCharCode(CHAR_CODES.A + index)
 }
