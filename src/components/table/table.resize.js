@@ -3,35 +3,35 @@ import { $ } from '@core/dom'
 export class TableResizer {
   #styles = {}
 
-  constructor (resizerEl, $root) {
+  constructor(resizerEl, $root) {
     this.$resizer = $(resizerEl)
     this.$root = $root
   }
 
-  get styles () {
+  get styles() {
     return this.#styles
   }
 
-  set styles (val) {
+  set styles(val) {
     if (!val) this.#styles = {}
     Object.entries(val).forEach(([prop, value]) => {
       this.#styles[prop] = value
     })
   }
 
-  get type () {
+  get type() {
     return this.$resizer.data.resize
   }
 
-  get $resizable () {
+  get $resizable() {
     return this.$resizer.closest('[data-type=resizable]')
   }
 
-  get isResizer () {
+  get isResizer() {
     return !!this.type
   }
 
-  start () {
+  start() {
     this.$resizer.data.active = ''
     const { coords } = this.$resizable
     const [axis, sideProp, sizeProp] = this.type === 'row'
@@ -47,7 +47,7 @@ export class TableResizer {
     }
   }
 
-  end () {
+  end() {
     delete this.$resizer.data.active
     this.$resizer.css({ right: 0, bottom: 0 })
     this.$root

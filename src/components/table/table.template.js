@@ -30,7 +30,7 @@ const createRow = (content, number) => `
         data-type="resizable" 
         ${number ? 'data-row="' + number + '"' : ''}>
     <div class="row-info">
-      ${number || ''}
+      ${number >= 0 ? number + 1 : ''}
       ${number
       ? '<div class="row__resizer" data-resize="row"></div>'
       : ''}

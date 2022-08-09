@@ -2,7 +2,7 @@ import { ExcelComponent } from '@core/ExcelComponent'
 
 export class ToolbarComponent extends ExcelComponent {
   static className = 'excel__toolbar'
-  toHTML () {
+  toHTML() {
     return `
     <div class="button">
       <i class="material-icons">format_align_left</i>

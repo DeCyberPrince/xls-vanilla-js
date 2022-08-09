@@ -77,11 +77,11 @@ if (env.dev) {
 
 module.exports = config
 
-function pathTo (...args) {
+function pathTo(...args) {
   return path.resolve(__dirname, ...args)
 }
 
-function filename (name, ext) {
+function filename(name, ext) {
   return env.prod
     ? `${name}.[fullhash].min.${ext}`
     : `${name}.[contenthash].dev.${ext}`

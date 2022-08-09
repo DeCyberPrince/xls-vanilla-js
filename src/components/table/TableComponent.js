@@ -3,6 +3,7 @@ import { createTable } from '@src/components/table/table.template'
 import { TableResizer } from '@src/components/table/table.resize'
 import { TableSelection } from '@src/components/table/TableSelection'
 import { $ } from '@core/dom'
+import { matrix } from '@core/utils'
 
 export class TableComponent extends ExcelComponent {
   static className = 'excel__table'
@@ -32,7 +33,16 @@ export class TableComponent extends ExcelComponent {
   onMouseup() {}
 
   onClick(e) {
-    this.#selection.select($(e.target))
+    const $cell = $(e.target)
+    if ($cell.data.type !== 'cell') return
+    const shiftPressed = e.shiftKey
+    if (shiftPressed) {
+      const $cells = matrix($cell, this.#selection.current)
+        .map(id => this.$root.query(`[data-id="${id}"]`))
+      this.#selection.selectGroup($cells)
+    } else {
+      this.#selection.select($cell)
+    }
   }
 
   init() {

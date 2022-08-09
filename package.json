@@ -7,8 +7,8 @@
     "build": "npm run build:prod",
     "build:dev": "cross-env NODE_ENV=development webpack",
     "build:prod": "cross-env NODE_ENV=production webpack",
-    "lint": "cross-env NODE_ENV=production eslint webpack.config.js src",
-    "lint:fix": "cross-env NODE_ENV=production eslint webpack.config.js src --fix"
+    "lint": "eslint {**/*,*}.js",
+    "lint:fix": "eslint {**/*,*}.js --fix"
   },
   "author": "DeCyberPrince",
   "license": "ISC",
