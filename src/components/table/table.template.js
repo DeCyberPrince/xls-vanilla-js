@@ -1,6 +1,6 @@
 const CHAR_CODES = {
   get A() { return 65 },
-  get Z() { return 90 }
+  get Z() { return 90 },
 }
 
 const createCell = (row, _, column) => {

@@ -3,7 +3,7 @@ import { createTable } from '@src/components/table/table.template'
 import { TableResizer } from '@src/components/table/table.resize'
 import { TableSelection } from '@src/components/table/TableSelection'
 import { $ } from '@core/dom'
-import { matrix } from '@core/utils'
+import { getCellCoords, matrix, nextSelector } from '@core/utils'
 
 export class TableComponent extends ExcelComponent {
   static className = 'excel__table'
@@ -13,7 +13,7 @@ export class TableComponent extends ExcelComponent {
   constructor($root) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'mousemove', 'mouseup', 'click']
+      listeners: ['mousedown', 'mousemove', 'mouseup', 'click', 'keydown'],
     })
   }
 
@@ -43,6 +43,23 @@ export class TableComponent extends ExcelComponent {
     } else {
       this.#selection.select($cell)
     }
+  }
+
+  onKeydown(e) {
+    const keys = [
+      'ArrowDown',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowUp',
+      'Enter',
+      'Tab',
+    ]
+    if (!(keys.includes(e.code) && !e.shiftKey)) return
+    e.preventDefault()
+    const currentCoords = getCellCoords(this.#selection.current)
+    const $next = this.$root.query(nextSelector(currentCoords, e.code))
+    if (!$next) return
+    this.#selection.select($next)
   }
 
   init() {

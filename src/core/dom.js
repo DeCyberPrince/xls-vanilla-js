@@ -61,6 +61,11 @@ class DOM {
       .forEach(([prop, value]) => (this.$el.style[prop] = value))
     return this
   }
+
+  focus() {
+    this.$el.focus()
+    return this
+  }
 }
 
 export function $(element) {

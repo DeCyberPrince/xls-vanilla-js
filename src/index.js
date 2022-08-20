@@ -11,8 +11,8 @@ const excelApp = new Excel('#app', {
     HeaderComponent,
     ToolbarComponent,
     FormulaComponent,
-    TableComponent
-  ]
+    TableComponent,
+  ],
 })
 
 excelApp.render()
