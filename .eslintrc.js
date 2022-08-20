@@ -12,7 +12,7 @@ module.exports = {
     failOnError: env.prod,
   },
   rules: {
-    'comma-dangle': ['error', 'only-multiline'],
+    'comma-dangle': ['error', 'always-multiline'],
     'space-before-function-paren': ['warn', 'never'],
-  }
+  },
 }

@@ -1,11 +1,11 @@
 class DOM {
-  constructor (element) {
+  constructor(element) {
     this.$el = element instanceof HTMLElement
       ? element
       : document.querySelector(element)
   }
 
-  html (htmlStr) {
+  html(htmlStr) {
     if (typeof htmlStr === 'string') {
       this.$el.innerHTML = htmlStr
       return this
@@ -13,49 +13,62 @@ class DOM {
     return this.$el.outerHTML.trim()
   }
 
-  clear () {
+  clear() {
     this.html('')
     return this
   }
 
-  append (element) {
+  append(element) {
     if (element instanceof DOM) element = element.$el
     this.$el.append(element)
     return this
   }
 
-  on (eventType, fn) {
+  on(eventType, fn) {
     this.$el.addEventListener(eventType, fn)
   }
 
-  off (eventType, fn) {
+  off(eventType, fn) {
     this.$el.removeEventListener(eventType, fn)
   }
 
-  closest (selector) {
+  closest(selector) {
     return $(this.$el.closest(selector))
   }
 
-  get data () {
+  get data() {
     return this.$el.dataset
   }
 
-  get coords () {
+  get coords() {
     return this.$el.getBoundingClientRect()
   }
 
-  queryAll (selector) {
+  get classes() {
+    return this.$el.classList
+  }
+
+  query(selector) {
+    return $(this.$el.querySelector(selector))
+  }
+
+  queryAll(selector) {
     return this.$el.querySelectorAll(selector)
   }
 
-  css (styles = {}) {
+  css(styles = {}) {
     Object.entries(styles)
       .forEach(([prop, value]) => (this.$el.style[prop] = value))
     return this
   }
+
+  focus() {
+    this.$el.focus()
+    return this
+  }
 }
 
-export function $ (element) {
+export function $(element) {
   return new DOM(element)
 }
 

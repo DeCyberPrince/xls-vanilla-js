@@ -1,13 +1,13 @@
 import { capitalize } from '@core/utils'
 
 export class DOMListener {
-  constructor ($root, listeners = []) {
+  constructor($root, listeners = []) {
     if (!$root) throw new Error('No $root element is provided')
     this.$root = $root
     this.listeners = listeners
   }
 
-  initDOMListeners () {
+  initDOMListeners() {
     this.listeners.forEach(eventType => {
       const methodName = getMethodName(eventType)
       this[methodName] = this[methodName]?.bind(this)
@@ -18,13 +18,13 @@ export class DOMListener {
     })
   }
 
-  removeDOMListeners () {
+  removeDOMListeners() {
     this.listeners.forEach((eventType) => {
       this.$root.off(eventType, this[getMethodName(eventType)])
     })
   }
 }
 
-function getMethodName (nativeEventName) {
+function getMethodName(nativeEventName) {
   return `on${capitalize(nativeEventName)}`
 }

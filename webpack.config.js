@@ -2,12 +2,12 @@ const [
   path,
   HtmlWebpackPlugin,
   MiniCssExtractPlugin,
-  ESLintPlugin
+  ESLintPlugin,
 ] = [
   require('path'),
   require('html-webpack-plugin'),
   require('mini-css-extract-plugin'),
-  require('eslint-webpack-plugin')
+  require('eslint-webpack-plugin'),
 ]
 
 const env = require('./.env')
@@ -16,28 +16,28 @@ const config = {
   context: pathTo('src'),
   mode: env.mode,
   entry: {
-    main: ['core-js/stable', 'regenerator-runtime/runtime', './index.js']
+    main: ['core-js/stable', 'regenerator-runtime/runtime', './index.js'],
   },
   output: {
     clean: true,
     path: pathTo('dist'),
-    filename: `${filename('[name]', 'js')}`
+    filename: `${filename('[name]', 'js')}`,
   },
   resolve: {
     alias: {
       '@src': pathTo('src'),
-      '@core': pathTo('src/core')
-    }
+      '@core': pathTo('src/core'),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
-      favicon: './favicon.ico'
+      favicon: './favicon.ico',
     }),
     new MiniCssExtractPlugin({
-      filename: `${filename('[name]', 'css')}`
+      filename: `${filename('[name]', 'css')}`,
     }),
-    new ESLintPlugin()
+    new ESLintPlugin(),
   ],
   module: {
     rules: [
@@ -47,20 +47,20 @@ const config = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader'
-        ]
+          'sass-loader',
+        ],
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
-      }
-    ]
-  }
+        use: ['babel-loader'],
+      },
+    ],
+  },
 }
 
 if (env.dev) {
@@ -70,18 +70,18 @@ if (env.dev) {
     hot: true,
     watchFiles: './',
     client: {
-      overlay: false
-    }
+      overlay: false,
+    },
   }
 }
 
 module.exports = config
 
-function pathTo (...args) {
+function pathTo(...args) {
   return path.resolve(__dirname, ...args)
 }
 
-function filename (name, ext) {
+function filename(name, ext) {
   return env.prod
     ? `${name}.[fullhash].min.${ext}`
     : `${name}.[contenthash].dev.${ext}`
