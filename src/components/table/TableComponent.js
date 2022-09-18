@@ -10,10 +10,11 @@ export class TableComponent extends ExcelComponent {
 
   #selection = new TableSelection()
 
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'mousemove', 'mouseup', 'click', 'keydown'],
+      ...options,
     })
   }
 
@@ -66,5 +67,8 @@ export class TableComponent extends ExcelComponent {
     super.init()
     const firstSelection = this.$root.query('[data-id="0:0"]')
     this.#selection.select(firstSelection)
+    this.$on('formula:input', text => {
+      this.#selection.current.text = text
+    })
   }
 }
