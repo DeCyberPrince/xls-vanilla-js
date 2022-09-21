@@ -25,19 +25,3 @@ export class TableSelection {
         $item.classes.remove(TableSelection.selectionClass))
   }
 }
-
-// function getSelectedCellsSelector(elA, elB) {
-//   const [[rowA, colA], [rowB, colB]] = [
-//     elA.data.id.split(':'),
-//     elB.data.id.split(':'),
-//   ]
-//   const selectors = []
-//   const [startRow, endRow] = [Math.min(rowA, rowB), Math.max(rowA, rowB)]
-//   const [startCol, endCol] = [Math.min(colA, colB), Math.max(colA, colB)]
-//   for (let i = startRow; i <= endRow; i++) {
-//     for (let j = startCol; j <= endCol; j++) {
-//       selectors.push(`[data-id="${i}:${j}"]`)
-//     }
-//   }
-//   return selectors.join()
-// }

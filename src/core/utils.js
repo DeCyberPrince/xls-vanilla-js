@@ -31,6 +31,7 @@ export function getCellCoords($cell) {
   const [row, column] = $cell.data.id.split(':')
   return { row: +row, column: +column }
 }
+
 export function nextSelector(currentCellCoords, keyCode) {
   let { row, column } = currentCellCoords
   switch (keyCode) {

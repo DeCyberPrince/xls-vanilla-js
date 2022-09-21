@@ -18,8 +18,13 @@ class DOM {
     return this
   }
 
-  get text() { return this.$el.textContent }
-  set text(val) { this.$el.textContent = val }
+  text(text = null) {
+    if (text === null) {
+      return this.$el.textContent.trim()
+    }
+    this.$el.textContent = text
+    return this
+  }
 
   append(element) {
     if (element instanceof DOM) element = element.$el
