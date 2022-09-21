@@ -18,6 +18,14 @@ class DOM {
     return this
   }
 
+  text(text = null) {
+    if (text === null) {
+      return this.$el.textContent.trim()
+    }
+    this.$el.textContent = text
+    return this
+  }
+
   append(element) {
     if (element instanceof DOM) element = element.$el
     this.$el.append(element)

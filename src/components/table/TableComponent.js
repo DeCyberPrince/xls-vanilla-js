@@ -10,10 +10,11 @@ export class TableComponent extends ExcelComponent {
 
   #selection = new TableSelection()
 
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'mousemove', 'mouseup', 'click', 'keydown'],
+      listeners: ['mousedown', 'click', 'keydown', 'input'],
+      ...options,
     })
   }
 
@@ -28,10 +29,6 @@ export class TableComponent extends ExcelComponent {
     document.onmouseup = () => $resizer.end()
   }
 
-  onMousemove(e) {}
-
-  onMouseup() {}
-
   onClick(e) {
     const $cell = $(e.target)
     if ($cell.data.type !== 'cell') return
@@ -41,7 +38,7 @@ export class TableComponent extends ExcelComponent {
         .map(id => this.$root.query(`[data-id="${id}"]`))
       this.#selection.selectGroup($cells)
     } else {
-      this.#selection.select($cell)
+      this.$select($cell)
     }
   }
 
@@ -59,12 +56,25 @@ export class TableComponent extends ExcelComponent {
     const currentCoords = getCellCoords(this.#selection.current)
     const $next = this.$root.query(nextSelector(currentCoords, e.code))
     if (!$next) return
-    this.#selection.select($next)
+    this.$select($next)
+  }
+
+  onInput(e) {
+    const text = $(e.target).text()?.trim()
+    this.$emit('table:input', text)
+  }
+
+  $select($cell) {
+    this.#selection.select($cell)
+    this.$emit('table:select', $cell)
   }
 
   init() {
     super.init()
-    const firstSelection = this.$root.query('[data-id="0:0"]')
-    this.#selection.select(firstSelection)
+    this.$select(this.$root.query('[data-id="0:0"]'))
+    this.$on('formula:input', text => {
+      this.#selection.current.text(text)
+    })
+    this.$on('formula:done', () => this.#selection.current.focus())
   }
 }

@@ -32,8 +32,8 @@ const createRow = (content, number) => `
     <div class="row-info">
       ${number >= 0 ? number + 1 : ''}
       ${number
-      ? '<div class="row__resizer" data-resize="row"></div>'
-      : ''}
+  ? '<div class="row__resizer" data-resize="row"></div>'
+  : ''}
     </div>
     <div class="row-data">${content}</div>
   </div>
