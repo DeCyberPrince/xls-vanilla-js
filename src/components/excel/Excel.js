@@ -2,9 +2,10 @@ import { $ } from '@core/dom'
 import { Emitter } from '@core/Emitter'
 
 export class Excel {
-  constructor(selector, { components = [] }) {
+  constructor(selector, { components = [], store }) {
     this.$el = $(selector)
     this.components = components
+    this.store = store
     this.emitter = new Emitter()
   }
 
@@ -14,6 +15,7 @@ export class Excel {
       const $componentEl = $.create(Component.className)
       const componentOptions = {
         emitter: this.emitter,
+        store: this.store,
       }
       const component = new Component($componentEl, componentOptions)
       $componentEl.html(component.toHTML())

@@ -45,8 +45,8 @@ export class FormulaComponent extends ExcelComponent {
       this.$input.text($cell.text())
     })
 
-    this.$on('table:input', text => {
-      this.$input.text(text)
+    this.$subscribe(state => {
+      this.$input.text(state.text)
     })
   }
 }

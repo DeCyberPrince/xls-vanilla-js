@@ -3,35 +3,48 @@ const CHAR_CODES = {
   get Z() { return 90 },
 }
 
-const createCell = (row, _, column) => {
-  return `<div class="cell" 
-               contenteditable 
-               data-column="${column}"
-               data-type="cell"
-               data-id="${row}:${column}">
-          </div>`
+const DEFAULT = {
+  HEIGHT: 24,
+  WIDTH: 120,
 }
 
-const rowWrap = (row, iterCallback) => {
-  return iterCallback.bind(null, row)
+const createCell = (state, row) => {
+  return (_, column) => {
+    const content = state.cellState[`${row}:${column}`]
+    return `<div class="cell" 
+           contenteditable 
+           data-column="${column}"
+           data-type="cell"
+           data-id="${row}:${column}"
+           style="width: ${state.columnState?.[column] || DEFAULT.WIDTH}px"
+           > ${content ?? ''}
+      </div>`
+  }
 }
 
-const createColumn = (content, index) => {
+const createColumn = ({ content, index, width }) => {
   return `
-    <div class="column" data-type="resizable" data-column="${index}">
+    <div 
+      class="column" 
+      data-type="resizable" 
+      data-column="${index}" 
+      style="width: ${width}"
+      >
       ${content}
       <div class="column__resizer" data-resize="column"></div>
     </div>
     `
 }
 
-const createRow = (content, number) => `
+const createRow = (content, number, state) => `
   <div class="row" 
         data-type="resizable" 
-        ${number ? 'data-row="' + number + '"' : ''}>
+        ${number >= 0 ? 'data-row="' + number + '"' : ''}
+        style="height: ${state?.[number] || DEFAULT.HEIGHT}px"
+        >
     <div class="row-info">
       ${number >= 0 ? number + 1 : ''}
-      ${number
+      ${number >= 0
   ? '<div class="row__resizer" data-resize="row"></div>'
   : ''}
     </div>
@@ -39,12 +52,21 @@ const createRow = (content, number) => `
   </div>
   `
 
+const applyState = state => (content, index) => ({
+  content,
+  index,
+  width: `${state?.[index] || DEFAULT.WIDTH}px`,
+})
+
 export const createTable = (
   rowsCount = 30,
-  colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1) => {
+  colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1,
+  state = {}) => {
+  console.log('createTable', state)
   const headers = new Array(colsCount)
     .fill('')
     .map(toChar)
+    .map(applyState(state.columnState))
     .map(createColumn)
     .join('')
   const table = [createRow(headers)]
@@ -52,9 +74,9 @@ export const createTable = (
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(colsCount)
       .fill('')
-      .map(rowWrap(i, createCell))
+      .map(createCell(state, i))
       .join('')
-    table.push(createRow(cells, i))
+    table.push(createRow(cells, i, state.rowState))
   }
   return table.join('')
 }

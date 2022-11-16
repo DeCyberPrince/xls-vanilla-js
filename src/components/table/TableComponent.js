@@ -4,6 +4,7 @@ import { TableResizer } from '@src/components/table/table.resize'
 import { TableSelection } from '@src/components/table/TableSelection'
 import { $ } from '@core/dom'
 import { getCellCoords, matrix, nextSelector } from '@core/utils'
+import * as actions from '@src/store/actions'
 
 export class TableComponent extends ExcelComponent {
   static className = 'excel__table'
@@ -19,14 +20,22 @@ export class TableComponent extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable()
+    return createTable(34, 26, this.store.getState())
   }
 
   onMousedown(e) {
     const $resizer = new TableResizer(e.target, this.$root)
     if (!$resizer.isResizer) return
     document.onmousemove = $resizer.start()
-    document.onmouseup = () => $resizer.end()
+    document.onmouseup = () => {
+      $resizer.end()
+      const element = $resizer.$resizable
+      this.$dispatch(actions.tableResize({
+        type: $resizer.type,
+        id: element.data[$resizer.type],
+        value: element.coords[$resizer.type === 'row' ? 'height' : 'width'],
+      }))
+    }
   }
 
   onClick(e) {
@@ -60,8 +69,8 @@ export class TableComponent extends ExcelComponent {
   }
 
   onInput(e) {
-    const text = $(e.target).text()?.trim()
-    this.$emit('table:input', text)
+    const $cell = $(e.target)
+    this.updateText($cell.data.id, $cell.text()?.trim())
   }
 
   $select($cell) {
@@ -69,11 +78,16 @@ export class TableComponent extends ExcelComponent {
     this.$emit('table:select', $cell)
   }
 
+  updateText(id, value) {
+    this.$dispatch(actions.changeText({ id, value }))
+  }
+
   init() {
     super.init()
     this.$select(this.$root.query('[data-id="0:0"]'))
     this.$on('formula:input', text => {
       this.#selection.current.text(text)
+      this.updateText(this.#selection.current.data.id, text)
     })
     this.$on('formula:done', () => this.#selection.current.focus())
   }
