@@ -11,7 +11,7 @@ export function rootReducer(state, action) {
     case CHANGE_TEXT: {
       const cellState = state.cellState || {}
       cellState[action.data.id] = action.data.value
-      return { ...state, text: action.data.value, cellState }
+      return { ...state, formulaText: action.data.value, cellState }
     }
     default:
       return state
