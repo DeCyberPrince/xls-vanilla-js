@@ -47,7 +47,7 @@ export class FormulaComponent extends ExcelComponent {
     this.$input = this.$root.query('[data-input]')
 
     this.$on('table:select', $cell => {
-      this.$input.text($cell.text())
+      this.$input.text($cell.data.value)
     })
   }
 }

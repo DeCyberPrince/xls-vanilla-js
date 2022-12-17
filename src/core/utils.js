@@ -75,3 +75,15 @@ export function toInlineStyles(stylesObj) {
     .map(key => `${camelCaseToKebabCase(key)}: ${stylesObj[key]}`)
     .join('; ')
 }
+
+export function debounce(fn, ms) {
+  let timeout
+  return function(...args) {
+    const later = () => {
+      clearTimeout(timeout)
+      fn(...args)
+    }
+    clearTimeout(timeout)
+    timeout = setTimeout(later, ms)
+  }
+}

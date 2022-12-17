@@ -1,3 +1,4 @@
+import { parse } from '@core/parse'
 import { toInlineStyles } from '@core/utils'
 import { DEFAULT_CELL_STYLE } from '@src/constants'
 
@@ -14,15 +15,16 @@ const DEFAULT = {
 const createCell = (state, row) => {
   return (_, column) => {
     const id = `${row}:${column}`
-    const content = state.cellState?.[id]
+    const content = state.cellState?.[id] ?? ''
     const styles = toInlineStyles(state.stylesState?.[id] || DEFAULT_CELL_STYLE)
     return `<div class="cell" 
            contenteditable 
            data-column="${column}"
            data-type="cell"
            data-id="${row}:${column}"
+           data-value="${content}"
            style="width: ${state.columnState?.[column] || DEFAULT.WIDTH}px;${styles};"
-           > ${content ?? ''}
+           > ${parse(content)}
       </div>`
   }
 }

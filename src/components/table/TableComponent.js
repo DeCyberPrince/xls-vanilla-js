@@ -1,5 +1,6 @@
 import { $ } from '@core/dom'
 import { ExcelComponent } from '@core/ExcelComponent'
+import { parse } from '@core/parse'
 import { getCellCoords, matrix, nextSelector } from '@core/utils'
 import { TableResizer } from '@src/components/table/table.resize'
 import { createTable } from '@src/components/table/table.template'
@@ -89,7 +90,9 @@ export class TableComponent extends ExcelComponent {
     super.init()
     this.$select(this.$root.query('[data-id="0:0"]'))
     this.$on('formula:input', text => {
-      this.#selection.current.text(text)
+      this.#selection.current
+        .attr('data-value', text)
+        .text(parse(text))
       this.updateText(this.#selection.current.data.id, text)
     })
     this.$on('formula:done', () => this.#selection.current.focus())

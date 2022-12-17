@@ -1,5 +1,5 @@
 import { Store } from '@core/createStore'
-import { storage } from '@core/utils'
+import { debounce, storage } from '@core/utils'
 import { rootReducer } from '@src/store/rootReducer'
 import { Excel } from '@src/components/excel/Excel'
 import './styles/index.scss'
@@ -11,9 +11,11 @@ import { TableComponent } from '@src/components/table/TableComponent'
 
 const store = new Store(rootReducer, storage('excel-state') || {})
 
-store.subscribe(state => {
+const stateListener = debounce(state => {
   storage('excel-state', state)
-})
+}, 300)
+
+store.subscribe(stateListener)
 
 const excelApp = new Excel('#app', {
   components: [

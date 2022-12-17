@@ -25,6 +25,14 @@ class DOM {
     this.$el.value = val
   }
 
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value)
+      return this
+    }
+    return this.$el.getAttribute(name)
+  }
+
   html(htmlStr) {
     if (typeof htmlStr === 'string') {
       this.$el.innerHTML = htmlStr
