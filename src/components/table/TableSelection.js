@@ -4,6 +4,10 @@ export class TableSelection {
   #group = []
   current = null
 
+  get selectedIds() {
+    return this.#group.map($el => $el.data.id)
+  }
+
   select($el) {
     this.clearAllSelections()
     this.#group.push($el)
@@ -23,5 +27,9 @@ export class TableSelection {
     clearedItems
       .forEach($item =>
         $item.classes.remove(TableSelection.selectionClass))
+  }
+
+  applyStyle(style) {
+    this.#group.forEach($el => $el.css(style))
   }
 }

@@ -1,3 +1,6 @@
+import { toInlineStyles } from '@core/utils'
+import { DEFAULT_CELL_STYLE } from '@src/constants'
+
 const CHAR_CODES = {
   get A() { return 65 },
   get Z() { return 90 },
@@ -10,13 +13,15 @@ const DEFAULT = {
 
 const createCell = (state, row) => {
   return (_, column) => {
-    const content = state.cellState[`${row}:${column}`]
+    const id = `${row}:${column}`
+    const content = state.cellState?.[id]
+    const styles = toInlineStyles(state.stylesState?.[id] || DEFAULT_CELL_STYLE)
     return `<div class="cell" 
            contenteditable 
            data-column="${column}"
            data-type="cell"
            data-id="${row}:${column}"
-           style="width: ${state.columnState?.[column] || DEFAULT.WIDTH}px"
+           style="width: ${state.columnState?.[column] || DEFAULT.WIDTH}px;${styles};"
            > ${content ?? ''}
       </div>`
   }

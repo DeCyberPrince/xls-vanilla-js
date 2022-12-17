@@ -1,14 +1,23 @@
 import { DOMListener } from '@core/DOMListener'
 
 export class ExcelComponent extends DOMListener {
-  constructor($root, { name, listeners, store, emitter, subscribe } = {}) {
+  constructor($root, {
+    name,
+    listeners,
+    store,
+    emitter,
+    subscribe,
+  } = {}) {
     super($root, listeners)
     this.name = name || ''
     this.emitter = emitter
     this.store = store
     this.subscribe = subscribe || []
     this.unsubscribers = []
+    this.prepare()
   }
+
+  prepare() {}
 
   toHTML() {
     return ''

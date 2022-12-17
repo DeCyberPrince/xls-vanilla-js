@@ -5,6 +5,26 @@ class DOM {
       : document.querySelector(element)
   }
 
+  get data() {
+    return this.$el.dataset
+  }
+
+  get coords() {
+    return this.$el.getBoundingClientRect()
+  }
+
+  get classes() {
+    return this.$el.classList
+  }
+
+  get value() {
+    return this.$el.value
+  }
+
+  set value(val) {
+    this.$el.value = val
+  }
+
   html(htmlStr) {
     if (typeof htmlStr === 'string') {
       this.$el.innerHTML = htmlStr
@@ -44,18 +64,6 @@ class DOM {
     return $(this.$el.closest(selector))
   }
 
-  get data() {
-    return this.$el.dataset
-  }
-
-  get coords() {
-    return this.$el.getBoundingClientRect()
-  }
-
-  get classes() {
-    return this.$el.classList
-  }
-
   query(selector) {
     return $(this.$el.querySelector(selector))
   }
@@ -70,6 +78,13 @@ class DOM {
     return this
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s]
+      return res
+    }, {})
+  }
+
   focus() {
     this.$el.focus()
     return this
@@ -77,7 +92,8 @@ class DOM {
 }
 
 export function $(element) {
-  return new DOM(element)
+  const $dom = new DOM(element)
+  return $dom.$el ? $dom : null
 }
 
 $.create = (classesStr = '', tagName = 'div') => {

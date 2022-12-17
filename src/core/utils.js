@@ -65,3 +65,13 @@ export function isEqual(a, b) {
   }
   return a === b
 }
+
+export function camelCaseToKebabCase(str) {
+  return str.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`)
+}
+
+export function toInlineStyles(stylesObj) {
+  return Object.keys(stylesObj)
+    .map(key => `${camelCaseToKebabCase(key)}: ${stylesObj[key]}`)
+    .join('; ')
+}

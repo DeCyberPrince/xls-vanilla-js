@@ -1,9 +1,10 @@
-import { ExcelComponent } from '@core/ExcelComponent'
-import { createTable } from '@src/components/table/table.template'
-import { TableResizer } from '@src/components/table/table.resize'
-import { TableSelection } from '@src/components/table/TableSelection'
 import { $ } from '@core/dom'
+import { ExcelComponent } from '@core/ExcelComponent'
 import { getCellCoords, matrix, nextSelector } from '@core/utils'
+import { TableResizer } from '@src/components/table/table.resize'
+import { createTable } from '@src/components/table/table.template'
+import { TableSelection } from '@src/components/table/TableSelection'
+import { DEFAULT_CELL_STYLE } from '@src/constants'
 import * as actions from '@src/store/actions'
 
 export class TableComponent extends ExcelComponent {
@@ -76,6 +77,8 @@ export class TableComponent extends ExcelComponent {
   $select($cell) {
     this.#selection.select($cell)
     this.$emit('table:select', $cell)
+    const styles = $cell.getStyles(Object.keys(DEFAULT_CELL_STYLE))
+    this.$dispatch(actions.changeStyles(styles))
   }
 
   updateText(id, value) {
@@ -90,5 +93,12 @@ export class TableComponent extends ExcelComponent {
       this.updateText(this.#selection.current.data.id, text)
     })
     this.$on('formula:done', () => this.#selection.current.focus())
+    this.$on('toolbar:applyStyle', value => {
+      this.#selection.applyStyle(value)
+      this.$dispatch(actions.applyStyle({
+        ids: this.#selection.selectedIds,
+        value,
+      }))
+    })
   }
 }
