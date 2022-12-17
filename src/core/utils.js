@@ -53,3 +53,37 @@ export function nextSelector(currentCellCoords, keyCode) {
   if (column < 0) column = 0
   return `[data-id="${row}:${column}"]`
 }
+
+export function storage(key, data = null) {
+  if (!data) return JSON.parse(localStorage.getItem(key))
+  localStorage.setItem(key, JSON.stringify(data))
+}
+
+export function isEqual(a, b) {
+  if (typeof a === 'object' && typeof b === 'object') {
+    return JSON.stringify(a) === JSON.stringify(b)
+  }
+  return a === b
+}
+
+export function camelCaseToKebabCase(str) {
+  return str.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`)
+}
+
+export function toInlineStyles(stylesObj) {
+  return Object.keys(stylesObj)
+    .map(key => `${camelCaseToKebabCase(key)}: ${stylesObj[key]}`)
+    .join('; ')
+}
+
+export function debounce(fn, ms) {
+  let timeout
+  return function(...args) {
+    const later = () => {
+      clearTimeout(timeout)
+      fn(...args)
+    }
+    clearTimeout(timeout)
+    timeout = setTimeout(later, ms)
+  }
+}

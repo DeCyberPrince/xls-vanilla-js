@@ -1,12 +1,23 @@
 import { DOMListener } from '@core/DOMListener'
 
 export class ExcelComponent extends DOMListener {
-  constructor($root, { name, listeners, emitter } = {}) {
+  constructor($root, {
+    name,
+    listeners,
+    store,
+    emitter,
+    subscribe,
+  } = {}) {
     super($root, listeners)
     this.name = name || ''
     this.emitter = emitter
+    this.store = store
+    this.subscribe = subscribe || []
     this.unsubscribers = []
+    this.prepare()
   }
+
+  prepare() {}
 
   toHTML() {
     return ''
@@ -14,6 +25,16 @@ export class ExcelComponent extends DOMListener {
 
   init() {
     this.initDOMListeners()
+  }
+
+  storeChanged() {}
+
+  isWatching(key) {
+    return this.subscribe.includes(key)
+  }
+
+  $dispatch(action) {
+    this.store.dispatch(action)
   }
 
   $emit(event, ...args) {
