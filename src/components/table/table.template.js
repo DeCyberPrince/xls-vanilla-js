@@ -69,7 +69,6 @@ export const createTable = (
   rowsCount = 30,
   colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1,
   state = {}) => {
-  console.log('createTable', state)
   const headers = new Array(colsCount)
     .fill('')
     .map(toChar)
