@@ -1,7 +1,8 @@
 import { $ } from '@core/dom'
-import { DEFAULT_TITLE } from '@src/constants'
 import * as actions from '@src/store/actions'
 import { ExcelComponent } from '@core/ExcelComponent'
+import { ActiveRoute } from '@core/routes/ActiveRoute'
+import { storage } from '@core/utils'
 
 export class HeaderComponent extends ExcelComponent {
   static className = 'excel__header'
@@ -12,13 +13,31 @@ export class HeaderComponent extends ExcelComponent {
     super($root, {
       name: 'Header',
       ...options,
-      listeners: ['input'],
+      listeners: ['input', 'click'],
     })
   }
 
   onInput(event) {
     const $title = $(event.target)
     this.$dispatch(actions.changeTitle({ value: $title.value }))
+  }
+
+  onClick(e) {
+    const $btn = $(e.target).closest('[data-action]')
+    if (!$btn) return
+    switch ($btn.data.action) {
+      case 'delete':
+        storage.clear(`excel:${ActiveRoute.param}`)
+        this.goToDashboard()
+        break
+      case 'exit':
+        this.goToDashboard()
+        break
+    }
+  }
+
+  goToDashboard() {
+    ActiveRoute.path = 'dashboard'
   }
 
   init() {
@@ -28,14 +47,15 @@ export class HeaderComponent extends ExcelComponent {
 
   toHTML() {
     const { title } = this.store.getState()
+    console.log('HeaderComponent title:', title)
     return `
-    <input type="text" class="input" data-title-input value="${title || DEFAULT_TITLE}"/>
+    <input type="text" class="input" data-title-input value="${title}"/>
     <div>
       <div class="button">
-        <i class="material-icons">delete</i>
+        <i class="material-icons" data-action="delete">delete</i>
       </div>
       <div class="button">
-        <i class="material-icons">exit_to_app</i>
+        <i class="material-icons" data-action="exit">exit_to_app</i>
       </div>
     </div>
     `

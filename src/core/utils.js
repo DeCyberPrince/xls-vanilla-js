@@ -59,6 +59,15 @@ export function storage(key, data = null) {
   localStorage.setItem(key, JSON.stringify(data))
 }
 
+storage.clear = (key) => {
+  if (key) {
+    localStorage.removeItem(key)
+    return localStorage
+  }
+  localStorage.clear()
+  return localStorage
+}
+
 export function isEqual(a, b) {
   if (typeof a === 'object' && typeof b === 'object') {
     return JSON.stringify(a) === JSON.stringify(b)

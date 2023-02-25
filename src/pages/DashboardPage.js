@@ -1,39 +1,21 @@
 import { $ } from '@core/dom'
 import { Page } from '@core/Page'
+import { getRecords } from '@src/pages/dashboard'
 
 export class DashboardPage extends Page {
   get $root() {
+    const id = Date.now()
     return $.create('dashboard').html(`
 <div class="dashboard__header">
   <h1>Dashboard</h1>
 </div>
 <div class="dashboard__new">
   <div class="dashboard__view">
-    <a href="#" class="dashboard__create">New Table</a>
+    <a href="#excel/${id}" class="dashboard__create">New Table</a>
   </div>
 </div>
 <div class="dashboard__table dashboard__view">
-  <div class="dashboard__list-header">
-    <span>Name</span>
-    <span>Last upload</span>
-  </div>
-  <ul class="dashboard__list">
-
-    <li class="dashboard__record">
-      <a href="#">Table #1</a>
-      <strong>01.03.1999</strong>
-    </li>
-
-    <li class="dashboard__record">
-      <a href="#">Table #2</a>
-      <strong>01.03.2009</strong>
-    </li>
-
-    <li class="dashboard__record">
-      <a href="#">Table #3</a>
-      <strong>01.03.2022</strong>
-    </li>
-  </ul>
+  ${getRecords()}
 </div>
     `)
   }

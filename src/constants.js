@@ -6,3 +6,8 @@ export const DEFAULT_CELL_STYLE = {
 }
 
 export const DEFAULT_TITLE = 'Untitled Table'
+
+export const DEFAULT_STATE = {
+  title: DEFAULT_TITLE,
+  currentStyles: DEFAULT_CELL_STYLE,
+}

@@ -22,10 +22,9 @@ export class Router {
 
   changePageHandler() {
     this.currentPage?.destroy()
-    const Page = ActiveRoute.path === 'excel'
+    const Page = ActiveRoute.path.startsWith('excel')
       ? this.routes.excel
       : this.routes.dashboard
-    console.log(ActiveRoute.path)
     this.currentPage = new Page(ActiveRoute.param)
     this.$placeholder.clear()
     this.$placeholder.append(this.currentPage.$root)

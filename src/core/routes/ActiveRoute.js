@@ -2,7 +2,10 @@ export class ActiveRoute {
   static get path() {
     return window.location.hash
       .replace('#', '')
-      .split('/')[0]
+  }
+
+  static set path(value) {
+    window.location.hash = `#${value}`
   }
 
   static get param() {
