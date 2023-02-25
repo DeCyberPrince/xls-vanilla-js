@@ -38,8 +38,8 @@ const config = {
       filename: `${filename('[name]', 'css')}`,
     }),
     new ESLintPlugin({
-      failOnError: env.prod
-    })
+      failOnError: env.prod,
+    }),
   ],
   module: {
     rules: [
