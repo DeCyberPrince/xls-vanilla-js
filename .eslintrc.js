@@ -9,5 +9,6 @@ module.exports = {
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'space-before-function-paren': ['warn', 'never'],
+    'no-new': 'off',
   },
 }
