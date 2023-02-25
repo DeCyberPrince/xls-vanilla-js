@@ -37,7 +37,9 @@ const config = {
     new MiniCssExtractPlugin({
       filename: `${filename('[name]', 'css')}`,
     }),
-    new ESLintPlugin(),
+    new ESLintPlugin({
+      failOnError: env.prod
+    })
   ],
   module: {
     rules: [
