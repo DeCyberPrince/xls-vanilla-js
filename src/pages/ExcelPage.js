@@ -1,6 +1,6 @@
 import { Page } from '@core/Page'
 
-import { Store } from '@core/createStore'
+import { Store } from '@core/store/Store'
 import { debounce, storage } from '@core/utils'
 import { rootReducer } from '@src/store/rootReducer'
 import { Excel } from '@src/components/excel/Excel'
