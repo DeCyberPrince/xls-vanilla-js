@@ -1,0 +1,25 @@
+@import '~normalize.css';
+
+@import './components/dashboard.scss';
+@import './components/header.scss';
+@import './components/toolbar.scss';
+@import './components/formula.scss';
+@import './components/table.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.excel {
+  position: relative;
+  color: #888888;
+  height: 100%;
+  max-width: 100%;
+  font-size: .8rem;
+}

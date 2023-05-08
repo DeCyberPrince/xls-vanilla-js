@@ -1,0 +1,81 @@
+@import '../_/variables', '../_/mixins';
+
+.excel__table {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: $header-height + $toolbar-height + $formula-height;
+  overflow-x: auto;
+
+  .row {
+    display: flex;
+    min-height: 20px;
+    height: $row-height;
+
+    &-info {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: $info-cell-width;
+      height: 100%;
+      border: 1px solid $border-color;
+      border-top: none;
+      border-left: none;
+      background-color: #F8F9FA;
+    }
+
+    &__resizer {
+      @include resizer($select-color, row-resize);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+    }
+
+    &-data {
+      display: flex;
+
+      .column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #F8F9FA;
+        min-width: 40px;
+        width: $cell-width;
+        height: 100%;
+        border: 1px solid $border-color;
+        border-top: none;
+        border-left: none;
+        position: relative;
+
+        &__resizer {
+          @include resizer($select-color, col-resize);
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 4px;
+        }
+      }
+
+      .cell {
+        min-width: 40px;
+        padding: 5px;
+        width: $cell-width;
+        height: 100%;
+        border: 1px solid #E2E3E3;
+        border-top: none;
+        border-left: none;
+        color: #111111;
+        white-space: nowrap;
+        outline: none;
+
+        &.selected {
+          border: none;
+          outline: 2px solid $select-color;
+          z-index: 2;
+        }
+      }
+    }
+  }
+}

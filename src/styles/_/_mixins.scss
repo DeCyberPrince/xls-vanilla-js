@@ -1,0 +1,59 @@
+@mixin button($color: green) {
+  height: 24px;
+  min-width: 24px;
+  padding: 3px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  color: rgba(0, 0, 0, .7);
+  cursor: pointer;
+
+  i {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+
+  &:active, &.active {
+    color: $color;
+  }
+
+  &:hover {
+    background-color: #EEEEEE;
+  }
+}
+
+@mixin clear-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin resizer($color: dodgerblue, $cursor: move) {
+  position: absolute;
+  opacity: 0;
+  cursor: e-resize;
+  background-color: $color;
+  z-index: 1;
+  &:hover, &[data-active] {
+    opacity: 1;
+    cursor: $cursor;
+  }
+  &[data-active][data-resize]::after {
+    position: absolute;
+    display: inline-block;
+    content: '';
+    background-color: $color;
+  }
+  &[data-resize=row]::after {
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100vw;
+  }
+  &[data-resize=column]::after {
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 1px;
+  }
+}
